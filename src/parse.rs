@@ -181,10 +181,10 @@ impl Operator for InfixOperator {
     fn from(token: &Token) -> Option<Self> {
         match token {
             Token::Plus => Some(Self::Add),
-            Token::Minus => Some(Self::Divide),
+            Token::Minus => Some(Self::Subtract),
             Token::Caret => Some(Self::Exponentiate),
             Token::Asterisk => Some(Self::Multiply),
-            Token::Slash => Some(Self::Subtract),
+            Token::Slash => Some(Self::Divide),
             Token::Percent => Some(Self::Modulo),
             _ => None,
         }

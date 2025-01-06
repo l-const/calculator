@@ -76,7 +76,7 @@ impl Calculator<'_> {
                     }
                 }
                 Operation::Assert(lhs) => Self::calculate_expression(*lhs)?,
-                Operation::Divide(lhs, rhs) => match (
+                Operation::Subtract(lhs, rhs) => match (
                     Self::calculate_expression(*lhs)?,
                     Self::calculate_expression(*rhs)?,
                 ) {
@@ -141,7 +141,7 @@ impl Calculator<'_> {
                     Value::Integer(i) => Value::Integer(-i),
                     Value::Float(f) => Value::Float(-f),
                 },
-                Operation::Subtract(lhs, rhs) => match (
+                Operation::Divide(lhs, rhs) => match (
                     Self::calculate_expression(*lhs)?,
                     Self::calculate_expression(*rhs)?,
                 ) {
@@ -203,5 +203,22 @@ mod tests {
             let calculator = "(1.1+1.1)*2+4!".to_string().calculate();
             assert_eq!(calculator, Ok(Value::Float(28.4)))
         }
+
+        {
+            let calculator = "4-2".to_string().calculate();
+            assert_eq!(calculator, Ok(Value::Integer(2)))
+        }
+
+        {
+            let calculator = "6/2".to_string().calculate();
+            assert_eq!(calculator, Ok(Value::Integer(3)))
+        }
+
+        {
+            let calculator = "45+3-9*2".to_string().calculate();
+            assert_eq!(calculator, Ok(Value::Integer(30)))
+        }
+
+
     }
 }
