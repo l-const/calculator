@@ -148,7 +148,7 @@ impl Calculator<'_> {
                     (Value::Integer(_), Value::Integer(0)) => {
                         return Err(Error::Value("Can't divide by zero".into()));
                     }
-                    (Value::Integer(lhs), Value::Integer(rhs)) => Value::Integer(lhs / rhs),
+                    (Value::Integer(lhs), Value::Integer(rhs)) => Value::Float(lhs as f64 / rhs as f64),
                     (Value::Float(lhs), Value::Float(rhs)) => Value::Float(lhs / rhs),
                     (Value::Integer(lhs), Value::Float(rhs)) => Value::Float(lhs as f64 / rhs),
                     (Value::Float(lhs), Value::Integer(rhs)) => Value::Float(lhs / rhs as f64),
@@ -211,7 +211,7 @@ mod tests {
 
         {
             let calculator = "6/2".to_string().calculate();
-            assert_eq!(calculator, Ok(Value::Integer(3)))
+            assert_eq!(calculator, Ok(Value::Float(3.0)))
         }
 
         {
@@ -219,6 +219,10 @@ mod tests {
             assert_eq!(calculator, Ok(Value::Integer(30)))
         }
 
+        {
+            let calculator = "4/5".to_string().calculate();
+            assert_eq!(calculator, Ok(Value::Float(0.8)))
+        }
 
     }
 }
